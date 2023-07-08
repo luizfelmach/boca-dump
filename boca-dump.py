@@ -6,6 +6,7 @@ from getpass import getpass
 import requests
 import multiprocessing
 import os
+import sys
 
 # BOCA_HOST = "https://boca.pet.inf.ufes.br/"  # BOCA do PET
 BOCA_HOST = "http://200.137.66.69/boca/"       # BOCA do Thiago
@@ -129,7 +130,10 @@ class Boca:
         return sha256(string.encode('utf-8')).hexdigest()
 
 if __name__ == '__main__':
+    if len(sys.argv) <= 1:
+        print(f"usage: {sys.argv[0]} <output_path>")
+        exit(0)
     user = input('User: ')
     password = getpass('Password: ')
     nav = Boca(user, password)
-    nav.save_runs("out") # pasta onde sera salvo
+    nav.save_runs(sys.argv[1]) # pasta onde sera salvo
