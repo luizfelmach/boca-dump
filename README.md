@@ -1,4 +1,3 @@
-
 ## Como usar
 
 - Clone o repositório
@@ -11,6 +10,8 @@ cd boca-dump
 - Instale as dependências
 
 ```bash
+python -m venv .venv #(opcional)
+source .venv/bin/activate #(opcional)
 pip install -r requirements.txt
 ```
 
@@ -19,4 +20,3 @@ pip install -r requirements.txt
 ```bash
 python3 boca-dump.py output_path
 ```
-

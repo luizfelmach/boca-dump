@@ -8,8 +8,8 @@ import multiprocessing
 import os
 import sys
 
-# BOCA_HOST = "https://boca.pet.inf.ufes.br/"  # BOCA do PET
-BOCA_HOST = "http://200.137.66.69/boca/"       # BOCA do Thiago
+BOCA_HOST = "https://boca.pet.inf.ufes.br/boca"  # BOCA do PET
+# BOCA_HOST = "http://200.137.66.69/boca/"       # BOCA do Thiago
 
 
 class Boca:
@@ -116,15 +116,19 @@ class Boca:
         return response
 
     def get_cookie_hash(self):
-        return self.get("/").text[1029:1055]
+        res = self.get("/")
+        sessId = res.cookies.get("PHPSESSID")
+        return sessId
 
     def is_auth(self):
         response = self.get("admin/index.php")
+        if "Username:" in response.text:
+            return True
         if "Session expired. You must log in again." in response.text:
             return False
         if "Violation (admin/index.php). Admin warned." in response.text:
             return False
-        return True
+        return False
     
     def hash256(self, string):
         return sha256(string.encode('utf-8')).hexdigest()
